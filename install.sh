@@ -41,9 +41,9 @@ echo -e "${GREEN}[OK] Файл .env создан.${NC}"
 echo ""
 echo -e "${YELLOW}--- Настройка конфигурации ---${NC}"
 
-# Запрос пароля
-read -p "Введите пароль для базы данных (POSTGRES_PASSWORD): " DB_PASSWORD
-if [ -z "$DB_PASSWORD" ]; then
+# Запрос пароля администратора
+read -p "Введите пароль администратора (ADMIN_PASSWORD): " ADMIN_PASSWORD
+if [ -z "$ADMIN_PASSWORD" ]; then
     echo -e "${RED}Пароль не может быть пустым.${NC}"
     exit 1
 fi
@@ -57,9 +57,9 @@ fi
 # Запись значений в .env
 # Используем sed для замены значений после знака '='
 # Экранируем специальные символы в пароле на всякий случай
-ESCAPED_PASSWORD=$(printf '%s\n' "$DB_PASSWORD" | sed -e 's/[\/&]/\\&/g')
+ESCAPED_ADMIN_PASSWORD=$(printf '%s\n' "$ADMIN_PASSWORD" | sed -e 's/[\/&]/\\&/g')
 
-sed -i.bak "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=${ESCAPED_PASSWORD}/" .env
+sed -i.bak "s/^ADMIN_PASSWORD=.*/ADMIN_PASSWORD=${ESCAPED_ADMIN_PASSWORD}/" .env
 sed -i.bak "s/^APP_PORT=.*/APP_PORT=${APP_PORT}/" .env
 
 # Удаляем резервную копию sed
@@ -67,7 +67,7 @@ rm -f .env.bak
 
 echo -e "${GREEN}[OK] Конфигурация сохранена в .env${NC}"
 echo "   - Порт: ${APP_PORT}"
-echo "   - Пароль БД: установлен"
+echo "   - Пароль администратора: установлен"
 
 # Запуск контейнеров
 echo ""
