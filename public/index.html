@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Print Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h2>️ Калькулятор 3D печати</h2>
+    <div class="calcSection">
+        <div class="formField"><label>Принтер</label><select id="printerSelect"></select></div>
+        <div class="formField"><label>Тип пластика</label><select id="plasticTypeSelect"></select></div>
+        <div class="formField"><label>Цвет</label><select id="plasticColorSelect"></select></div>
+        <div class="formField">
+            <label>Вес</label>
+            <div class="inputRow"><input type="number" id="weightInput" placeholder="0"><div class="unit">г</div></div>
+        </div>
+        <div class="formField">
+            <label>Время печати</label>
+            <div class="inputRow"><input type="number" id="hoursInput" placeholder="час"><span class="separator">:</span><input type="number" id="minsInput" placeholder="мин"></div>
+        </div>
+        <button onclick="calculateCost()">Рассчитать стоимость</button>
+        <div id="resultBlock" class="result" style="display:none;"><div id="resultTotal"></div></div>
+    </div>
+    <hr>
+    <button id="adminBtn" onclick="openModal()" class="adminBtn">️ Администратор</button>
+    
+    <div id="adminPanel" class="adminPanel" style="display:none;">
+        <div class="adminHeader"><h3>⚙️ Панель управления</h3><button onclick="logout()" class="logoutBtn">Выйти</button></div>
+        
+        <div class="adminBlock">
+            <h4>Принтеры</h4>
+            <div id="printersList" class="itemsList"></div>
+            <div class="addForm">
+                <div class="formField"><input type="text" id="pName" placeholder="Название принтера"></div>
+                <div class="formField"><input type="number" id="pCost" placeholder="Стоимость принтера (₽)"></div>
+                <div class="formField"><input type="number" id="pPower" placeholder="Мощность (Вт)"></div>
+                <div class="formField"><input type="number" id="pService" placeholder="Обслуживание/мес (₽)"></div>
+                <div class="formField"><input type="number" id="pLife" placeholder="Срок службы (лет)" value="2"></div>
+                <div class="formField"><input type="number" id="pElectricity" placeholder="Стоимость электроэнергии (₽/кВт·ч)" step="0.1" value="5.5"></div>
+                <button onclick="addPrinter()">Добавить принтер</button>
+            </div>
+        </div>
+
+        <div class="adminBlock">
+            <h4>Материалы</h4>
+            <div id="plasticsList" class="itemsList"></div>
+            <div class="addForm">
+                <div class="formField">
+                    <select id="plType">
+                        <option value="ABS">ABS</option><option value="PLA">PLA</option>
+                        <option value="PETG">PETG</option><option value="TPU">TPU</option>
+                        <option value="PETG-CF">PETG-CF</option><option value="PETG-GF">PETG-GF</option>
+                    </select>
+                </div>
+                <div class="formField"><input type="text" id="plColor" placeholder="Цвет"></div>
+                <div class="formField"><input type="number" id="plPrice" placeholder="Цена за кг (₽)"></div>
+                <button onclick="addPlastic()">Добавить материал</button>
+            </div>
+        </div>
+
+        <div class="adminBlock">
+            <h4>Настройки расчета</h4>
+            <div class="addForm">
+                <div class="formField"><label>Коэффициент брака</label><input type="number" id="sReject" step="0.1"></div>
+                <div class="formField"><label>Работа оператора (₽)</label><input type="number" id="sOperator"></div>
+                <div class="formField"><label>Надбавка</label><input type="number" id="sMarkup" step="0.1"></div>
+                <button onclick="saveSettings()" class="saveBtn">Сохранить настройки</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loginModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h3>Вход администратора</h3>
+        <input type="password" id="adminPass" placeholder="Пароль">
+        <button onclick="checkPass()">Войти</button>
+        <button onclick="closeModal()" class="cancelBtn">Отмена</button>
+        <p id="passError" class="error" style="display:none;">Неверный пароль</p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
