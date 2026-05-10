@@ -13,7 +13,7 @@ app.use(session({
   cookie: { secure: false } // В production поставьте true и используйте HTTPS
 }));
 
-const DB_FILE = "db.json";
+const DB_FILE = process.env.DB_FILE || "/app/data/db.json";
 
 function loadDB() {
   if (!fs.existsSync(DB_FILE)) {
