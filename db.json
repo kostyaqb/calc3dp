@@ -1,0 +1,9 @@
+{
+  "printers": [],
+  "plastics": [],
+  "settings": {
+    "rejectCoef": 1.2,
+    "operatorCost": 100,
+    "markup": 1.5
+  }
+}
