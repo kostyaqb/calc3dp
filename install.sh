@@ -24,7 +24,7 @@ fi
 
 echo -e "${GREEN}[OK] Docker и Docker Compose найдены.${NC}"
 
-# Создание файла .env из примера
+# Создание файла .env
 if [ -f .env ]; then
     echo -e "${YELLOW}Внимание: Файл .env уже существует. Он будет перезаписан.${NC}"
     read -p "Продолжить? (y/n): " confirm
@@ -32,10 +32,8 @@ if [ -f .env ]; then
         echo "Установка отменена."
         exit 0
     fi
+    rm -f .env
 fi
-
-cp .env.example .env
-echo -e "${GREEN}[OK] Файл .env создан.${NC}"
 
 # Интерактивный запрос параметров
 echo ""
@@ -54,20 +52,30 @@ if [ -z "$APP_PORT" ]; then
     APP_PORT=3000
 fi
 
-# Запись значений в .env
-# Используем sed для замены значений после знака '='
-# Экранируем специальные символы в пароле на всякий случай
-ESCAPED_ADMIN_PASSWORD=$(printf '%s\n' "$ADMIN_PASSWORD" | sed -e 's/[\/&]/\\&/g')
+# Запрос SESSION_SECRET
+read -p "Введите SESSION_SECRET (или нажмите Enter для генерации случайного): " SESSION_SECRET
+if [ -z "$SESSION_SECRET" ]; then
+    SESSION_SECRET=$(openssl rand -hex 32 2>/dev/null || echo "secret_$(date +%s)_$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)")
+    echo -e "${GREEN}[OK] Сгенерирован случайный SESSION_SECRET${NC}"
+fi
 
-sed -i.bak "s/^ADMIN_PASSWORD=.*/ADMIN_PASSWORD=${ESCAPED_ADMIN_PASSWORD}/" .env
-sed -i.bak "s/^APP_PORT=.*/APP_PORT=${APP_PORT}/" .env
-
-# Удаляем резервную копию sed
-rm -f .env.bak
+# Создание файла .env с правильными значениями
+cat > .env <<EOF
+# Переменные окружения для Docker
+SESSION_SECRET=${SESSION_SECRET}
+ADMIN_PASSWORD=${ADMIN_PASSWORD}
+APP_PORT=${APP_PORT}
+EOF
 
 echo -e "${GREEN}[OK] Конфигурация сохранена в .env${NC}"
 echo "   - Порт: ${APP_PORT}"
 echo "   - Пароль администратора: установлен"
+echo "   - SESSION_SECRET: установлен"
+
+# Остановка старых контейнеров и удаление volumes для чистой установки
+echo ""
+echo -e "${YELLOW}Очистка старых контейнеров (если есть)...${NC}"
+$COMPOSE_CMD down -v 2>/dev/null || true
 
 # Запуск контейнеров
 echo ""
