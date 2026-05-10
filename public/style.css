@@ -1,0 +1,38 @@
+* { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+body { margin: 0; background: #f0f2f5; padding: 20px; }
+.container { max-width: 680px; margin: 0 auto; background: #fff; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+h2 { text-align: center; margin-top: 0; color: #333; }
+h3 { margin: 0; color: #444; }
+h4 { margin: 24px 0 12px; color: #555; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+.formField { margin-bottom: 16px; width: 100%; }
+label { display: block; font-size: 13px; color: #666; margin-bottom: 6px; font-weight: 600; }
+input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; background: #f9f9f9; outline: none; transition: 0.2s; }
+input:focus, select:focus { border-color: #2f80ed; background: #fff; }
+.inputRow { display: flex; gap: 12px; align-items: flex-end; }
+.inputRow input { margin-bottom: 0; }
+.unit, .separator { display: flex; align-items: center; justify-content: center; font-weight: bold; color: #555; background: #eee; border-radius: 8px; padding: 0 14px; height: 44px; flex-shrink: 0; }
+button { width: 100%; padding: 14px; border: none; border-radius: 8px; background: #2f80ed; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 12px; transition: 0.2s; }
+button:hover { background: #1a6dd4; }
+.adminBtn { background: #666; margin-top: 24px; }
+.adminBtn:hover { background: #555; }
+.logoutBtn { background: #999; width: auto; padding: 8px 16px; margin: 0; font-size: 14px; }
+.saveBtn { background: #27ae60; }
+.saveBtn:hover { background: #219150; }
+.cancelBtn { background: #ccc; color: #333; }
+.cancelBtn:hover { background: #bbb; }
+.result { background: #e6f7ff; color: #0050b3; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; border: 1px solid #91d5ff; font-size: 22px; font-weight: bold; }
+.adminPanel { margin-top: 30px; padding-top: 24px; border-top: 2px solid #f0f0f0; }
+.adminHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.itemsList { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.itemBlock { border: 1px solid #e1e5ea; border-radius: 10px; padding: 16px; background: #fafafa; }
+.itemInfo { margin-bottom: 8px; }
+.itemInfo strong { display: block; font-size: 15px; color: #222; margin-bottom: 4px; }
+.itemInfo span { font-size: 13px; color: #666; display: block; line-height: 1.4; }
+/* Кнопка удалить на новой строке, во всю ширину */
+.deleteBtn { background: #ff4d4f; display: block; width: 100%; margin-top: 12px; padding: 10px; font-size: 14px; }
+.deleteBtn:hover { background: #ff7875; }
+.addForm { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px dashed #d0d5db; margin-top: 12px; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { background: #fff; padding: 28px; border-radius: 12px; width: 320px; text-align: center; }
+.error { color: #ff4d4f; font-size: 14px; margin-top: 12px; }
+hr { border: 0; border-top: 1px solid #eee; margin: 28px 0; }
